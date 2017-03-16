@@ -1,5 +1,6 @@
 package com.suixingpay;
 
+import com.suixingpay.example.Enum.CreateEnum;
 import com.suixingpay.example.Enum.DbType;
 import com.suixingpay.example.Utils.CreateUtils;
 import com.suixingpay.example.Utils.Encryption.EncryptFactory;
@@ -16,6 +17,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ImportResource;
 
+import java.text.ParseException;
+import java.util.Date;
+
 @SpringBootApplication
 @Configurable(autowire = Autowire.BY_NAME)
 @ImportResource(value={"classpath:application-context.xml"})
@@ -27,10 +31,27 @@ public class MyEtlApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyEtlApplication.class, args);
         LOGGER.info("---------spring boot执行完毕-----------");
-        TestEvent event = new TestEvent(TestEvent.class, DbType.CAMS);
+        TestEvent event = new TestEvent(TestEvent.class, DbType.TEST);
         SpringContextUtil.getContext().publishEvent(event);
 
-    /*    String enStr = "710DC5D79B681B21FE701F18B172A94B";
-        CreateUtils.encryption(EncryptorEnum.TYPE_WALLET, enStr);*/
-	}
+
+
+
+    /*    Thread thread1 = new Thread(()->{
+            String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
+            String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
+            String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123456789");
+            LOGGER.info("1-2相同2-3不同{}-{}-{}",res1,res2,res3);
+        });
+        thread1.start();
+
+        Thread thread2 = new Thread(()->{
+            String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555555");
+            String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
+            String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555554");
+            LOGGER.info("1-2相同2-3不同{}-{}-{}",res1,res2,res3);
+        });
+        thread2.start();*/
+
+    }
 }

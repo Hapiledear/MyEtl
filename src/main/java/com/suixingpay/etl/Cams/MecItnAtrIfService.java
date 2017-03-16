@@ -49,12 +49,7 @@ import com.suixingpay.example.events.TestEvent;
             return;
         }
         LOGGER.info("----------- mysql source ---> target------------------");
-       /* List<BapTableClass> saved = new ArrayList<>();
 
-        String sql = "SELECT uap_student.id,className,uap_student.name FROM uap_class JOIN uap_student ON uap_class.id = uap_student.class_id";
-
-       CreateUtils.StoT(saved,bapTClassRepository,sql);*/
-        
         List<MecItnAttrIfPo> saved = new ArrayList<MecItnAttrIfPo>();
         
         String sql = "SELECT * FROM  BAP.T_BAP_MEC_ITN_ATTR_IF where IN_MNO in (SElECT IN_MNO FROM BAP.T_BAP_MEC_IF WHERE MEC_TYP = '03') and rownum <=10 ";

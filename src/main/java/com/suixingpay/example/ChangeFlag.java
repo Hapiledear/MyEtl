@@ -17,6 +17,7 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
@@ -25,9 +26,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @date: 2017/3/15 21:01
  * @version: V1.0
  */
-@Target({METHOD, FIELD})
+@Target({METHOD, FIELD,TYPE})
 @Retention(RUNTIME)
 public @interface ChangeFlag {
+
+    String inMnoName() default "";
 
     /**
      * 来源表的字段名，当字段名称不同时使用
@@ -47,5 +50,30 @@ public @interface ChangeFlag {
      */
     CreateEnum systemCreate() default CreateEnum.TYPE_NONE;
 
+    /**
+     * 按照原系统解密
+     * 再按照本系统进行加密
+     * @return
+     */
     EncryptorEnum encryptType() default EncryptorEnum.TYPE_NONE;
+
+    /**
+     * date合并 格式:cName1@cName2
+     * cName1为日期
+     * cName2为时间
+     * @return Date格式的日期
+     */
+    String mergerDate() default "";
+
+    /**
+     * 转换状态标识，标识字段必须为varchar或char类型
+     * 可以与 alise 共存
+     * 格式 "源标识-现标识;源标识-现标识$默认现标识"
+     * eg "01-00;00-01%00"
+     * 源标识 01正常，00异常
+     * 现标识 00正常，01异常
+     * @return
+     */
+    String switchType() default "";
+
 }
