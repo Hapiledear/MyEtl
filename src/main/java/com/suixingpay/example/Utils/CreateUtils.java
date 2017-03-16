@@ -9,6 +9,10 @@
 package com.suixingpay.example.Utils;
 
 import com.suixingpay.example.ChangeFlag;
+import com.suixingpay.example.Utils.Encryption.AbstractEncrypt;
+import com.suixingpay.example.Utils.Encryption.Encrypt;
+import com.suixingpay.example.Utils.Encryption.EncryptFactory;
+import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
 import com.suixingpay.example.core.bap.domain.BapTableClass;
 import com.suixingpay.example.core.uap.resp.UapTClassRepository;
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;
@@ -29,6 +33,8 @@ import java.util.stream.Collectors;
  */
 public class CreateUtils {
     private static Logger LOGGER = LoggerFactory.getLogger(CreateUtils.class);
+
+    private static AbstractEncrypt umsEnc =  EncryptFactory.getEncryption(EncryptorEnum.TYPE_UMS);
 
 
     public static Object create(String type) {
@@ -68,9 +74,7 @@ public class CreateUtils {
      */
     public static  <T extends BaseRepository>  void StoT(List saved,T tagretResp,String sql ){
         LOGGER.info("-----------开始执行数据转换------------------");
-        //    List<R> saved = new ArrayList<>();
         Map<String, Object> params = new HashMap<String, Object>();
-        //   String sql = "SELECT uap_student.id,className,uap_student.name FROM uap_class JOIN uap_student ON uap_class.id = uap_student.class_id";
         //// TODO: 2017/3/16 改变源数据时替换该类 UapTClassRepository
         saved = SpringContextUtil.getContext().getBean(UapTClassRepository.class).findBySQL(sql, params).stream().map(obj -> {
             BapTableClass bapTableClass = new BapTableClass();
@@ -90,10 +94,17 @@ public class CreateUtils {
                         columnName = !StringUtils.isEmpty(changeType.alise()) ? changeType.alise() : column.name();
                         columnValue = !StringUtils.isEmpty(changeType.defaultValue())
                                 ? changeType.defaultValue() : obj.get(columnName);
+
                         String createType = changeType.systemCreate();
                         if (!StringUtils.isEmpty(createType)){
                             columnValue = CreateUtils.create(createType);
                         }
+
+                        EncryptorEnum encType = changeType.encryptType();
+                        if (EncryptorEnum.TYPE_NONE != encType){
+                            columnValue = CreateUtils.encryption(encType,columnValue);
+                        }
+
                         //// TODO: 2017/3/16 各项uitl加在这里
 
                     }
@@ -111,5 +122,19 @@ public class CreateUtils {
         tagretResp.save(saved);
     }
 
+    /**
+     * 加解密工具
+     * @param sourceEncType
+     * @param columnValue
+     * @return
+     */
+    public static Object encryption(EncryptorEnum sourceEncType, Object columnValue) {
+
+        AbstractEncrypt sourceEnc = EncryptFactory.getEncryption(sourceEncType);
+        String decryptStr = sourceEnc.decrypt(String.valueOf(columnValue));
+        LOGGER.info("原文{}",decryptStr);
+
+        return umsEnc.encrypt(decryptStr);
+    }
 
 }

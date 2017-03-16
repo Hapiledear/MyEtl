@@ -8,6 +8,8 @@
  */
 package com.suixingpay.example;
 
+import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -43,4 +45,6 @@ public @interface ChangeFlag {
      * @return
      */
     String systemCreate() default "";
+
+    EncryptorEnum encryptType() default EncryptorEnum.TYPE_NONE;
 }

@@ -35,4 +35,6 @@ dependencies {
 	compile ('com.oracle:ojdbc6:11.2.0.4')
     compile("org.apache.commons:commons-lang3:3.4")
 
+    compile("com.suixingpay.common:common-encryption:0.4")
+
 }

@@ -12,5 +12,6 @@
 	<util:properties id="jpaProps" location="classpath:application.properties" />
 	<import resource="classpath:bap/application-target.xml" />
 	<import resource="classpath:uap/application-source.xml" />
+	<util:properties id="commonData" location="classpath:config/commonData.properties"/>
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>  
 </beans>
