@@ -30,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +45,7 @@ public class CreateUtils {
 
     private static AbstractEncrypt umsEnc =  EncryptFactory.getEncryption(EncryptorEnum.TYPE_UMS);
 
+    private static final Lock lock = new ReentrantLock();
     //key = in_mno value = usrId
     private static final ConcurrentHashMap<String,String> usrIdMap =  new ConcurrentHashMap();
     private static AtomicLong usrIdSeed = new AtomicLong(900000000000001L);//900-0000-0000-0001
@@ -169,17 +172,24 @@ public class CreateUtils {
      * @param o
      * @return
      */
-    public static Object create(CreateEnum type, Object inMno) {
+    public static synchronized Object create(CreateEnum type, Object inMno) {
         switch (type){
             case TYPE_UUID:
                 return 100321;
             case TYPE_USR_ID:{
-                String usrId = usrIdMap.get(inMno);
-                if (StringUtils.isEmpty(usrId)){
-                    usrId = String.valueOf(usrIdSeed.incrementAndGet());
-                    usrIdMap.put(String.valueOf(inMno),usrId);
+                String usrId ;
+                lock.lock();
+                try {
+                   usrId = usrIdMap.get(inMno);
+                    if (StringUtils.isEmpty(usrId)){
+                        usrId = String.valueOf(usrIdSeed.incrementAndGet());
+                        usrIdMap.put(String.valueOf(inMno),usrId);
+                    }
+                } finally {
+                    lock.unlock();
                 }
-                return usrId;
+
+                return "SXF"+usrId;
             }
 
             default:

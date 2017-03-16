@@ -37,11 +37,11 @@ public class MyEtlApplication {
 
 
 
-    /*    Thread thread1 = new Thread(()->{
+        Thread thread1 = new Thread(()->{
             String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
             String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
             String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123456789");
-            LOGGER.info("1-2相同2-3不同{}-{}-{}",res1,res2,res3);
+            LOGGER.info("thread1 1-2相同2-3不同{}-{}-{}",res1,res2,res3);
         });
         thread1.start();
 
@@ -49,9 +49,9 @@ public class MyEtlApplication {
             String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555555");
             String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
             String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555554");
-            LOGGER.info("1-2相同2-3不同{}-{}-{}",res1,res2,res3);
+            LOGGER.info("thread2 1-2相同2-3不同{}-{}-{}",res1,res2,res3);
         });
-        thread2.start();*/
+        thread2.start();
 
     }
 }
