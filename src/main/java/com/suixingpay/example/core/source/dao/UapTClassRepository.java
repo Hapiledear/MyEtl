@@ -1,7 +1,7 @@
-package com.suixingpay.example.core.uap.resp;
+package com.suixingpay.example.core.source.dao;
 
 
-import com.suixingpay.example.core.uap.domain.UapTClass;
+import com.suixingpay.example.core.source.domain.UapTClass;
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

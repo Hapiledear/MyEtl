@@ -6,9 +6,10 @@
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example.core.bap.domain;
+package com.suixingpay.example.core.target.domain;
 
 import com.suixingpay.example.ChangeFlag;
+import com.suixingpay.example.Enum.CreateEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -25,7 +26,7 @@ import javax.persistence.*;
 public class BapTableClass {
     @Id
     @Column(name = "id")
-    @ChangeFlag(systemCreate = "uuid")
+    @ChangeFlag(systemCreate = CreateEnum.TYPE_UUID)
     private Integer id;
 
     @Column(name = "className")

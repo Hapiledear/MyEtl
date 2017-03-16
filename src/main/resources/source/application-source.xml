@@ -18,19 +18,19 @@
           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
           
 	<bean id="uapread" name="uapread" autowire="byName" class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="driverClassName" value="#{jpaProps['spring.datasource.soruce.read.driver-class-name']}" />
+		<property name="driverClassName" value="#{jpaProps['spring.datasource.source.read.driver-class-name']}" />
 		<property name="url"
-			value="#{jpaProps['spring.datasource.soruce.read.url']}" />
-		<property name="username" value="#{jpaProps['spring.datasource.soruce.read.username']}" />
-		<property name="password" value="#{jpaProps['spring.datasource.soruce.read.password']}" />
+			value="#{jpaProps['spring.datasource.source.read.url']}" />
+		<property name="username" value="#{jpaProps['spring.datasource.source.read.username']}" />
+		<property name="password" value="#{jpaProps['spring.datasource.source.read.password']}" />
 	</bean>
 
 	<bean id="uapwrite" name="uapwrite"  primary="true"  autowire="byName" class="com.alibaba.druid.pool.DruidDataSource">
-		<property name="driverClassName" value="#{jpaProps['spring.datasource.soruce.write.driver-class-name']}" />
+		<property name="driverClassName" value="#{jpaProps['spring.datasource.source.write.driver-class-name']}" />
 		<property name="url"
-			value="#{jpaProps['spring.datasource.soruce.write.url']}" />
-		<property name="username" value="#{jpaProps['spring.datasource.soruce.write.username']}" />
-		<property name="password" value="#{jpaProps['spring.datasource.soruce.write.password']}" />
+			value="#{jpaProps['spring.datasource.source.write.url']}" />
+		<property name="username" value="#{jpaProps['spring.datasource.source.write.username']}" />
+		<property name="password" value="#{jpaProps['spring.datasource.source.write.password']}" />
 	</bean>
 
 	<!--动态选择数据源 -->
@@ -57,7 +57,7 @@
 				<property name="showSql" value="true" />
 			</bean>
 		</property>
-		<property name="packagesToScan" value="com.**.core.uap.domain" />
+		<property name="packagesToScan" value="com.suixingpay.etl.Cams.core.source.domain" />
 		<property name="jpaPropertyMap">
 			<map>
 				<entry key="javax.persistence.schema-generation.database.action"
@@ -73,7 +73,7 @@
 
 	<tx:annotation-driven transaction-manager="uaptransactionManager" />
 	
-	<jpa:repositories base-package="com.**.core.uap.resp"
+	<jpa:repositories base-package="com.suixingpay.etl.Cams.core.source.dao"
 	entity-manager-factory-ref="uapentityManagerFactory" 
 	transaction-manager-ref="uaptransactionManager"
 	factory-class="com.suixingpay.turbo.framework.jpa.repository.base.BaseRepositoryFactoryBean"

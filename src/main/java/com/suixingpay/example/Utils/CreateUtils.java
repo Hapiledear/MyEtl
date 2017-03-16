@@ -8,16 +8,17 @@
  */
 package com.suixingpay.example.Utils;
 
+import com.suixingpay.etl.Cams.core.target.dao.BapMecItnAttrIfRepository;
 import com.suixingpay.example.ChangeFlag;
+import com.suixingpay.example.Enum.CreateEnum;
 import com.suixingpay.example.Utils.Encryption.AbstractEncrypt;
-import com.suixingpay.example.Utils.Encryption.Encrypt;
 import com.suixingpay.example.Utils.Encryption.EncryptFactory;
 import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
-import com.suixingpay.example.core.bap.domain.BapTableClass;
-import com.suixingpay.example.core.uap.resp.UapTClassRepository;
+import com.suixingpay.turbo.framework.jpa.annotation.DS;
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
@@ -37,7 +38,7 @@ public class CreateUtils {
     private static AbstractEncrypt umsEnc =  EncryptFactory.getEncryption(EncryptorEnum.TYPE_UMS);
 
 
-    public static Object create(String type) {
+    public static Object create(CreateEnum type) {
         return 100321;
     }
 
@@ -67,19 +68,34 @@ public class CreateUtils {
 
     /**
      *
-     * @param saved 目标数据表的list容器
+     * @param targetClazz 目标数据表的list容器
      * @param tagretResp 目标数据表的domain
      * @param sql  源数据库的sql查询语句
      * @param <T> 目标数据表的domain类
      */
-    public static  <T extends BaseRepository>  void StoT(List saved,T tagretResp,String sql ){
+    @Transactional
+    @DS(name = "write")
+    public static  <T extends BaseRepository,S>  void StoT(Class<S> targetClazz,T tagretResp,String sql ){
         LOGGER.info("-----------开始执行数据转换------------------");
         Map<String, Object> params = new HashMap<String, Object>();
+        List<S> saved ;
+
         //// TODO: 2017/3/16 改变源数据时替换该类 UapTClassRepository
-        saved = SpringContextUtil.getContext().getBean(UapTClassRepository.class).findBySQL(sql, params).stream().map(obj -> {
-            BapTableClass bapTableClass = new BapTableClass();
+        saved = SpringContextUtil.getContext().getBean(BapMecItnAttrIfRepository.class).findBySQL(sql, params).stream().map(obj -> {
+            S bapTableClass = null;
+            try {
+                bapTableClass = targetClazz.newInstance();
+            }
+            catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             ////  2017/3/15 对象的转换
-            Arrays.stream(BapTableClass.class.getDeclaredFields()).forEach(field -> {
+            S finalBapTableClass = bapTableClass;
+            //<editor-fold desc="反射操作">
+            Arrays.stream(targetClazz.getDeclaredFields()).forEach(field -> {
                 field.setAccessible(true);
                 try {
                     ChangeFlag changeType = field.getAnnotation(ChangeFlag.class);
@@ -95,8 +111,8 @@ public class CreateUtils {
                         columnValue = !StringUtils.isEmpty(changeType.defaultValue())
                                 ? changeType.defaultValue() : obj.get(columnName);
 
-                        String createType = changeType.systemCreate();
-                        if (!StringUtils.isEmpty(createType)){
+                        CreateEnum createType = changeType.systemCreate();
+                        if (CreateEnum.TYPE_NONE != createType){
                             columnValue = CreateUtils.create(createType);
                         }
 
@@ -108,18 +124,22 @@ public class CreateUtils {
                         //// TODO: 2017/3/16 各项uitl加在这里
 
                     }
-                    field.set(bapTableClass, columnValue);
+                    field.set(finalBapTableClass, columnValue);
                 }
                 catch (Exception e) {
                     LOGGER.info("发生错误！" + e);
                 }
 
             });
+            //</editor-fold>
             LOGGER.info("转换结果,{}",bapTableClass.toString());
             return bapTableClass;
         }).collect(Collectors.toList());
 
-        tagretResp.save(saved);
+        LOGGER.info("数据={}",saved.get(1).toString());
+        tagretResp.save(saved.get(1));
+   //   List resList =   tagretResp.save(saved);
+        LOGGER.info("save结束，影响{}条数据",1);
     }
 
     /**

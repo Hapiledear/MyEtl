@@ -8,6 +8,7 @@
  */
 package com.suixingpay.example;
 
+import com.suixingpay.example.Enum.CreateEnum;
 import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
 
 import java.lang.annotation.Inherited;
@@ -44,7 +45,7 @@ public @interface ChangeFlag {
      * 系统创建，一般是生成主键
      * @return
      */
-    String systemCreate() default "";
+    CreateEnum systemCreate() default CreateEnum.TYPE_NONE;
 
     EncryptorEnum encryptType() default EncryptorEnum.TYPE_NONE;
 }

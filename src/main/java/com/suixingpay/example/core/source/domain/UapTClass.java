@@ -1,4 +1,4 @@
-package com.suixingpay.example.core.uap.domain;
+package com.suixingpay.example.core.source.domain;
 
 import com.suixingpay.turbo.framework.jpa.domain.BaseDomain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
