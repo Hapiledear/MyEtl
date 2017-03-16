@@ -1,4 +1,4 @@
-package com.suixingpay.etl.Cams.core.source.domain;
+package com.suixingpay.etl.Cams.core.target.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

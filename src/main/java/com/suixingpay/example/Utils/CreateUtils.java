@@ -8,7 +8,7 @@
  */
 package com.suixingpay.example.Utils;
 
-import com.suixingpay.etl.Cams.core.target.dao.BapMecItnAttrIfRepository;
+import com.suixingpay.etl.Cams.core.source.dao.BapMecItnAttrIfRepository;
 import com.suixingpay.example.ChangeFlag;
 import com.suixingpay.example.Enum.CreateEnum;
 import com.suixingpay.example.Utils.Encryption.AbstractEncrypt;

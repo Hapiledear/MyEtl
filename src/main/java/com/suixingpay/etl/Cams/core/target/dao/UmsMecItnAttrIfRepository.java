@@ -1,6 +1,6 @@
-package com.suixingpay.etl.Cams.core.source.dao;
+package com.suixingpay.etl.Cams.core.target.dao;
 
-import com.suixingpay.etl.Cams.core.source.domain.MecItnAttrIfPo;
+import com.suixingpay.etl.Cams.core.target.domain.MecItnAttrIfPo;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;

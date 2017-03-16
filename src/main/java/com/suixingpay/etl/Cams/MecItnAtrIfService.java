@@ -11,9 +11,9 @@ package com.suixingpay.etl.Cams;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.suixingpay.etl.Cams.core.target.dao.BapMecItnAttrIfRepository;
-import com.suixingpay.etl.Cams.core.source.domain.MecItnAttrIfPo;
-import com.suixingpay.etl.Cams.core.source.dao.UmsMecItnAttrIfRepository;
+import com.suixingpay.etl.Cams.core.source.dao.BapMecItnAttrIfRepository;
+import com.suixingpay.etl.Cams.core.target.domain.MecItnAttrIfPo;
+import com.suixingpay.etl.Cams.core.target.dao.UmsMecItnAttrIfRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
