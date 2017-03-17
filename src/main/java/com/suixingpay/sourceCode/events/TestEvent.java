@@ -6,9 +6,9 @@
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example.events;
+package com.suixingpay.sourceCode.events;
 
-import com.suixingpay.example.Enum.DbType;
+import com.suixingpay.sourceCode.Enum.DbType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
@@ -37,7 +37,7 @@ public class TestEvent extends ApplicationEvent  {
         return id;
     }
 
-    public void addTask(){
+    public void startTask(){
         if (taskNum.intValue() == 0){
             changTaskFinished = false;
             LOGGER.info("-----------任务执行开始！---------");

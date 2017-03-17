@@ -1,8 +1,8 @@
 package com.suixingpay.etl.Cams.core.target.domain;
 
 
-import com.suixingpay.example.ChangeFlag;
-import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+import com.suixingpay.sourceCode.ChangeFlag;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptorEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

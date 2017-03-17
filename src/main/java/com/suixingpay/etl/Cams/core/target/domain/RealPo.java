@@ -1,9 +1,9 @@
 package com.suixingpay.etl.Cams.core.target.domain;
 
 
-import com.suixingpay.example.ChangeFlag;
-import com.suixingpay.example.Enum.CreateEnum;
-import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+import com.suixingpay.sourceCode.ChangeFlag;
+import com.suixingpay.sourceCode.Enum.CreateEnum;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptorEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -140,8 +140,64 @@ public class RealPo{
     @ChangeFlag(mergerDate = "APPROVAL_DATE@APPROVAL_TIME")
 	private	java.util.Date	uteDt;
 
+    //身份证
+    @Column(name = "ID_NO")
+    @ChangeFlag(alise = "ENC_ID_CARD_NO",
+            sourceEncryptType = EncryptorEnum.TYPE_WALLET)
+    private String idNo;
+
+    //姓名
+    @Column(name = "ID_NAME")
+    @ChangeFlag(alise = "ENC_REAL_NAME",
+            sourceEncryptType = EncryptorEnum.TYPE_WALLET)
+    private String idName;
+
+    //银行卡号
+    @Column(name = "BNK_ACC")
+    @ChangeFlag(alise = "ENC_ACC_NO",
+            sourceEncryptType = EncryptorEnum.TYPE_WALLET)
+    private String bnkAcc;
+
+    //手机号
+    @Column(name = "MBL_NO")
+    @ChangeFlag(alise = "ENC_MOBILE_PHONE",
+            sourceEncryptType = EncryptorEnum.TYPE_WALLET)
+    private String mblNo;
+
     @Override public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
+    public String getIdName() {
+        return idName;
+    }
+
+    public void setIdName(String idName) {
+        this.idName = idName;
+    }
+
+    public String getBnkAcc() {
+        return bnkAcc;
+    }
+
+    public void setBnkAcc(String bnkAcc) {
+        this.bnkAcc = bnkAcc;
+    }
+
+    public String getMblNo() {
+        return mblNo;
+    }
+
+    public void setMblNo(String mblNo) {
+        this.mblNo = mblNo;
     }
 
     public void setRealId(String realId) {

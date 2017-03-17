@@ -6,14 +6,15 @@
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example.Utils;
+package com.suixingpay.sourceCode.Utils;
 
-import com.suixingpay.etl.Cams.core.source.dao.BapMecItnAttrIfRepository;
-import com.suixingpay.example.ChangeFlag;
-import com.suixingpay.example.Enum.CreateEnum;
-import com.suixingpay.example.Utils.Encryption.AbstractEncrypt;
-import com.suixingpay.example.Utils.Encryption.EncryptFactory;
-import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+
+import com.suixingpay.sourceCode.ChangeFlag;
+import com.suixingpay.sourceCode.Enum.CreateEnum;
+import com.suixingpay.sourceCode.Utils.Encryption.AbstractEncrypt;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptFactory;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptorEnum;
+import com.suixingpay.sourceCode.core.source.dao.SourceRepository;
 import com.suixingpay.turbo.framework.core.util.time.DateFormatUtils;
 import com.suixingpay.turbo.framework.jpa.annotation.DS;
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;
@@ -88,21 +89,20 @@ public class CreateUtils {
     @Transactional
     @DS(name = "write")
     public static  <T extends BaseRepository,S>  void StoT(Class<S> targetClazz,T tagretResp,String sql ){
-        LOGGER.info("-----------开始执行数据转换------------------");
+     //   LOGGER.debug("-----------开始执行数据转换------------------");
         Map<String, Object> params = new HashMap<String, Object>();
         List<S> saved ;
 
-        //// TODO: 2017/3/16 改变源数据时替换该类 UapTClassRepository
-        saved = SpringContextUtil.getContext().getBean(BapMecItnAttrIfRepository.class).findBySQL(sql, params).stream().map(obj -> {
+        saved = SpringContextUtil.getContext().getBean(SourceRepository.class).findBySQL(sql, params).stream().map(obj -> {
             S bapTableClass = null;
             try {
                 bapTableClass = targetClazz.newInstance();
             }
             catch (InstantiationException e) {
-                e.printStackTrace();
+                LOGGER.error("InstantiationException",e);
             }
             catch (IllegalAccessException e) {
-                e.printStackTrace();
+                LOGGER.error("IllegalAccessException",e);
             }
             ////  2017/3/15 对象的转换
             S finalBapTableClass = bapTableClass;
@@ -163,7 +163,7 @@ public class CreateUtils {
                     field.set(finalBapTableClass, columnValue);
                 }
                 catch (Exception e) {
-                    LOGGER.info("{}发生错误！" + e);
+                    LOGGER.error("发生错误！",e);
                 }
 
             });

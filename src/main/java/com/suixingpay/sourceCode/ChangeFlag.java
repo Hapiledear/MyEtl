@@ -6,12 +6,11 @@
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example;
+package com.suixingpay.sourceCode;
 
-import com.suixingpay.example.Enum.CreateEnum;
-import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+import com.suixingpay.sourceCode.Enum.CreateEnum;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptorEnum;
 
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 

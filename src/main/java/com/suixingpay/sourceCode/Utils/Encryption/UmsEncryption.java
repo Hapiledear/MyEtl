@@ -2,33 +2,33 @@
  * All rights Reserved, Designed By Suixingpay.
  *
  * @author: yang_huang<yang_huang@suixingpay.com>
- * @date: 2017/3/9 13:45
+ * @date: 2017/3/9 9:50
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example.Utils.Encryption;
+package com.suixingpay.sourceCode.Utils.Encryption;
 
 import com.suixingpay.common.encryption.EncryptionUtil;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @Description: 钱包md5加密/解密方式
+ * @Description: ums的加/解密工具
  * @author: yang_huang<yang_huang@suixingpay.com>
- * @date: 2017/3/9 13:45
+ * @date: 2017/3/9 9:50
  * @version: V1.0
  */
-public class WalletEncryption extends AbstractEncrypt {
+public class UmsEncryption extends AbstractEncrypt {
 
-    private static final String KEY_NAME = "walletKey";
+    private static final String KEY_NAME = "encryptKey";
 
-    private static WalletEncryption instance;
+    private static UmsEncryption instance;
 
-    private WalletEncryption() {
+    private UmsEncryption() {
     }
 
-    public static WalletEncryption getInstance() {
+    public static UmsEncryption getInstance() {
         if (null == instance) {
-            instance = new WalletEncryption();
+            instance = new UmsEncryption();
         }
         return instance;
     }

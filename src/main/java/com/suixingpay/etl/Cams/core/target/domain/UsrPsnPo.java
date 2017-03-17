@@ -1,7 +1,7 @@
 package com.suixingpay.etl.Cams.core.target.domain;
 
-import com.suixingpay.example.ChangeFlag;
-import com.suixingpay.example.Enum.CreateEnum;
+import com.suixingpay.sourceCode.ChangeFlag;
+import com.suixingpay.sourceCode.Enum.CreateEnum;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.DynamicUpdate;

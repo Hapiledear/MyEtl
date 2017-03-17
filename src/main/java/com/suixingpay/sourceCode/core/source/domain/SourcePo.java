@@ -1,9 +1,10 @@
-package com.suixingpay.etl.Cams.core.source.domain;
+package com.suixingpay.sourceCode.core.source.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 /**
  * Description: 商户基础表 Po
  * Copyright: ©2017 suixingpay. All rights reserved.
@@ -12,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cams.T_CAMS_USR_LOGIN")
-public class MecPo {
+public class SourcePo {
 	// 用户编号
 	@Id
 	@Column(name = "UUID")

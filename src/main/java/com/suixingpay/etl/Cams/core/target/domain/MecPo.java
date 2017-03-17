@@ -1,7 +1,7 @@
 package com.suixingpay.etl.Cams.core.target.domain;
 
-import com.suixingpay.example.ChangeFlag;
-import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
+import com.suixingpay.sourceCode.ChangeFlag;
+import com.suixingpay.sourceCode.Utils.Encryption.EncryptorEnum;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -150,7 +150,7 @@ public class MecPo{
 	}
 	@Override
 	public String toString() {
-		return "MecPo [usrId=" + usrId + ", mno=" + mno + ", inMno=" + inMno + ", viewName=" + viewName + ", mecSts=" + mecSts + ", mecTyp=" + mecTyp + ", mblNo=" + mblNo
+		return "SourcePo [usrId=" + usrId + ", mno=" + mno + ", inMno=" + inMno + ", viewName=" + viewName + ", mecSts=" + mecSts + ", mecTyp=" + mecTyp + ", mblNo=" + mblNo
 				+ ", cteDt=" + cteDt + ", uteDt=" + uteDt + "]";
 	}
 	

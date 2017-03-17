@@ -55,7 +55,7 @@
 				<property name="showSql" value="true" />
 			</bean>
 		</property>
-		<property name="packagesToScan" value="com.suixingpay.etl.Cams.core.target.domain" />
+		<property name="packagesToScan" value="com.suixingpay.etl.*.core.target.domain" />
 		<property name="jpaPropertyMap">
 			<map>
 				<entry key="javax.persistence.schema-generation.database.action"
@@ -71,7 +71,7 @@
 
 	<tx:annotation-driven transaction-manager="baptransactionManager" />
 	
-	<jpa:repositories base-package="com.suixingpay.etl.Cams.core.target.dao"
+	<jpa:repositories base-package="com.suixingpay.etl.*.core.target.dao"
 	entity-manager-factory-ref="bapentityManagerFactory" 
 	transaction-manager-ref="baptransactionManager"
 	factory-class="com.suixingpay.turbo.framework.jpa.repository.base.BaseRepositoryFactoryBean"

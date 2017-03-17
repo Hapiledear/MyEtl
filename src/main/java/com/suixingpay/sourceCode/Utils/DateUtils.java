@@ -1,7 +1,7 @@
-package com.suixingpay.example.Utils;
+package com.suixingpay.sourceCode.Utils;
 
 
-import com.suixingpay.example.Enum.DateTypeEnum;
+import com.suixingpay.sourceCode.Enum.DateTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;

@@ -6,12 +6,12 @@
  * @Copyright: ©2017 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
  */
-package com.suixingpay.example.Utils.Encryption;
+package com.suixingpay.sourceCode.Utils.Encryption;
 
 
 import com.suixingpay.common.encryption.EncryptionType;
 import com.suixingpay.common.encryption.EncryptionUtil;
-import com.suixingpay.example.Utils.SpringContextUtil;
+import com.suixingpay.sourceCode.Utils.SpringContextUtil;
 
 import java.util.Map;
 
