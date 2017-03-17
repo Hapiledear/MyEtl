@@ -9,7 +9,11 @@
 package com.suixingpay.example.events;
 
 import com.suixingpay.example.Enum.DbType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Description: TODO
@@ -18,7 +22,11 @@ import org.springframework.context.ApplicationEvent;
  * @version: V1.0
  */
 public class TestEvent extends ApplicationEvent  {
-    DbType id;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestEvent.class);
+
+    private DbType id;
+    private AtomicInteger taskNum = new AtomicInteger(0);
+    private boolean changTaskFinished  = false;
 
     public TestEvent(Object source,DbType id) {
         super(source);
@@ -28,4 +36,21 @@ public class TestEvent extends ApplicationEvent  {
     public DbType getId() {
         return id;
     }
+
+    public void addTask(){
+        if (taskNum.intValue() == 0){
+            changTaskFinished = false;
+            LOGGER.info("-----------任务执行开始！---------");
+        }
+        taskNum.getAndIncrement();
+    }
+
+    public void finishTask(){
+        taskNum.getAndDecrement();
+        if (taskNum.intValue() == 0){
+            changTaskFinished = true;
+            LOGGER.info("-----------任务执行结束！---------");
+        }
+    }
+
 }

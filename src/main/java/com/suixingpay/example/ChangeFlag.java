@@ -54,10 +54,11 @@ public @interface ChangeFlag {
     /**
      * 按照原系统解密
      * 再按照本系统进行加密
+     * sourceEncryptType 为空则不进入加解密程序
      * @return
      */
-    EncryptorEnum encryptType() default EncryptorEnum.TYPE_NONE;
-
+    EncryptorEnum sourceEncryptType() default EncryptorEnum.TYPE_NONE;
+    EncryptorEnum tagertEncryptType() default EncryptorEnum.TYPE_NONE;
     /**
      * date合并 格式:cName1@cName2
      * cName1为日期
@@ -75,6 +76,8 @@ public @interface ChangeFlag {
      * 现标识 00正常，01异常
      * @return
      */
-    String switchType() default "";
+    String switcSTS() default "";
+
+    boolean ToString() default false;
 
 }

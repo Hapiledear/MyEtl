@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.suixingpay.etl.Cams.core.source.dao.BapMecItnAttrIfRepository;
-import com.suixingpay.etl.Cams.core.target.domain.MecItnAttrIfPo;
-import com.suixingpay.etl.Cams.core.target.dao.UmsMecItnAttrIfRepository;
+import com.suixingpay.etl.Cams.core.target.dao.*;
+import com.suixingpay.etl.Cams.core.target.domain.*;
+import com.suixingpay.example.Utils.Encryption.EncryptorEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,28 +37,71 @@ import com.suixingpay.example.events.TestEvent;
     private static Logger LOGGER = LoggerFactory.getLogger(MecItnAtrIfService.class);
 
 
-    @Autowired 
-    private BapMecItnAttrIfRepository bapMecItnAttrIfRepository; //目的，domain
+/*    @Autowired
+    private BapMecItnAttrIfRepository bapMecItnAttrIfRepository; //只需要一写*/
 
-    @Autowired 
-    private UmsMecItnAttrIfRepository umsMecItnAttrIfRepository;//只需要一写
 
-    @EventListener
-    @Async
-    public void start(TestEvent readyEvent) {
-        if (DbType.CAMS != readyEvent.getId()){
+    //目的，domain
+    @Autowired private MecDao mecDao;
+
+    @Autowired private MecWalletIfDao mecWalletIfDao;
+
+    @Autowired private UmsMecItnAttrIfRepository umsMecItnAttrIfRepository;
+
+    @Autowired private UsrPsnDao usrPsnDao;
+
+    @Autowired private UsrDao usrDao;
+
+    @Autowired private UsrProdBindDao usrProdBindDao;
+
+    @Autowired private RealDao realDao;
+
+    private String testSqlLimit = " where rownum <=10";
+
+    @EventListener @Async public void start(TestEvent readyEvent) {
+        if (DbType.CAMS != readyEvent.getId()) {
             return;
         }
-        LOGGER.info("----------- mysql source ---> target------------------");
-
-        List<MecItnAttrIfPo> saved = new ArrayList<MecItnAttrIfPo>();
+        LOGGER.info("-----------MecPo ------------------");
         
-        String sql = "SELECT * FROM  BAP.T_BAP_MEC_ITN_ATTR_IF where IN_MNO in (SElECT IN_MNO FROM BAP.T_BAP_MEC_IF WHERE MEC_TYP = '03') and rownum <=10 ";
+    /*    String sql = "SELECT * FROM  BAP.T_BAP_MEC_ITN_ATTR_IF where IN_MNO in (SElECT IN_MNO FROM BAP.T_BAP_MEC_IF WHERE MEC_TYP = '03') and rownum <=10 ";
        
-        CreateUtils.StoT(MecItnAttrIfPo.class,umsMecItnAttrIfRepository,sql);
-        
+        CreateUtils.StoT(MecItnAttrIfPo.class,umsMecItnAttrIfRepository,sql);*/
+
+      //T_UMS_MEC
+      /*  String sql = "SELECT p.usr_in_no, p.nick_name, p.enc_reg_mobile, b.usr_status, b.reg_date , b.reg_time, b.update_date, b.update_time, b.usr_type FROM CAMS.T_CAMS_USR_INF_PERSON p JOIN CAMS.T_CAMS_BASE_USR_INF b ON p.usr_in_no = b.usr_in_no";
+        CreateUtils.StoT(MecPo.class, mecDao, sql);*/
+
+      // T_UMS_MEC_WALLET_IF
+/*       String sql = "select  u.real_auth_state usts,u.cust_level ulevel, p.* from CAMS.T_CAMS_USR_INF_PERSON p left join CAMS.T_CAMS_BASE_USR_INF u on p.usr_in_no = u.usr_in_no"
+               ;
+        CreateUtils.StoT(MecWalletIfPo.class,mecWalletIfDao,sql);*/
+
+        //T_UMS_ITN_ATTR_IF
+/*        String sql = "select p.usr_in_no,p.create_date,p.create_time,p.update_date,p.update_time from CAMS.T_CAMS_USR_INF_PERSON p "
+               ;
+        CreateUtils.StoT(MecItnAttrIfPo.class,umsMecItnAttrIfRepository,sql);*/
+
+        //T_UMS_USR_PSN
+/*        String sql ="select p.usr_in_no,p.nick_name,p.gender,p.birth_year,p.birth_month,p.birth_day from CAMS.T_CAMS_USR_INF_PERSON p "
+
+        CreateUtils.StoT(UsrPsnPo.class,usrPsnDao,sql);*/
+
+        //T_UMS_USR_IF
+/*        String sql ="select p.usr_in_no,u.usr_status,p.nick_name,u.reg_date,u.reg_time,u.update_date,u.update_time,p.enc_reg_mobile,u.real_auth_state,u.reg_src,u.lock_expire_date,u.lock_reason from CAMS.T_CAMS_USR_INF_PERSON p left join CAMS.T_CAMS_BASE_USR_INF u on p.usr_in_no = u.usr_in_no"
+                +testSqlLimit;
+        CreateUtils.StoT(UsrPo.class,usrDao,sql);*/
+
+//T_UMS_USR_PROD_BIND
+/*    String sql = "select p.usr_in_no, u.reg_date,u.reg_time,u.update_date,u.update_time from CAMS.T_CAMS_USR_INF_PERSON p left join CAMS.T_CAMS_BASE_USR_INF u on p.usr_in_no = u.usr_in_no"
+            ;
+        CreateUtils.StoT(UsrProdBindPo.class,usrProdBindDao,sql);*/
+//T_UMS_REAL
+
+        String sql = "select * from CAMS.T_CAMS_CUST_AUTH_HIS"
+            +testSqlLimit;
+        CreateUtils.StoT(RealPo.class,realDao,sql);
+
     }
-
-
 
 }

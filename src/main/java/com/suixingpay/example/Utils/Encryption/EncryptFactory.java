@@ -24,14 +24,17 @@ public class EncryptFactory {
     public static AbstractEncrypt getEncryption(EncryptorEnum encType) {
         switch (encType) {
             case TYPE_UMS:
-                LOGGER.info("获取ums加密机");
+                LOGGER.debug("获取ums加密机");
                 return UmsEncryption.getInstance();
             case TYPE_WALLET:
-                LOGGER.info("获取钱包加密机");
+               LOGGER.debug("获取钱包加密机");
                 return WalletEncryption.getInstance();
+            case TYPE_NONE:
+                LOGGER.debug("无加密");
+                return NoneEncryption.getInstance();
             default:
-                LOGGER.info("获取默认的加密机");
-                return UmsEncryption.getInstance();
+                LOGGER.debug("获取默认的加密机");
+                return NoneEncryption.getInstance();
         }
     }
 }

@@ -18,7 +18,6 @@ import com.suixingpay.turbo.framework.core.util.time.DateFormatUtils;
 import com.suixingpay.turbo.framework.jpa.annotation.DS;
 import com.suixingpay.turbo.framework.jpa.repository.base.BaseRepository;
 
-import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,9 +134,10 @@ public class CreateUtils {
                             columnValue = CreateUtils.create(createType);
                         }
 
-                        EncryptorEnum encType = changeType.encryptType();
-                        if (EncryptorEnum.TYPE_NONE != encType){
-                            columnValue = CreateUtils.encryption(encType,columnValue);
+                        EncryptorEnum sEncType = changeType.sourceEncryptType();
+                        EncryptorEnum tEncType = changeType.tagertEncryptType();
+                        if (EncryptorEnum.TYPE_NONE != sEncType){
+                            columnValue = CreateUtils.encryption(sEncType,tEncType,columnValue);
                         }
 
                         String merger = changeType.mergerDate();
@@ -148,9 +148,13 @@ public class CreateUtils {
                            columnValue = mergeDateStr(dateValue,timeValue);
                         }
 
-                        String switchStr = changeType.switchType();
+                        String switchStr = changeType.switcSTS();
                         if (!StringUtils.isEmpty(switchStr)){
                             columnValue = switchState(switchStr,columnValue);
+                        }
+
+                        if (changeType.ToString()){
+                            columnValue = getStringValue(columnValue);
                         }
 
                         //// TODO: 2017/3/16 各项uitl加在这里
@@ -159,7 +163,7 @@ public class CreateUtils {
                     field.set(finalBapTableClass, columnValue);
                 }
                 catch (Exception e) {
-                    LOGGER.info("发生错误！" + e);
+                    LOGGER.info("{}发生错误！" + e);
                 }
 
             });
@@ -257,13 +261,15 @@ public class CreateUtils {
      * @param columnValue
      * @return
      */
-    public static Object encryption(EncryptorEnum sourceEncType, Object columnValue) {
+    public static Object encryption(EncryptorEnum sourceEncType, EncryptorEnum targetEncType, Object columnValue)
+            throws Exception {
 
         AbstractEncrypt sourceEnc = EncryptFactory.getEncryption(sourceEncType);
-        String decryptStr = sourceEnc.decrypt(String.valueOf(columnValue));
-        LOGGER.info("原文{}",decryptStr);
+        AbstractEncrypt targetEnc = EncryptFactory.getEncryption(targetEncType);
+        String decryptStr = sourceEnc.decrypt(getStringValue(columnValue));
+        LOGGER.debug("源加密机{}，目的加密机{}原文{}",sourceEncType,targetEncType,decryptStr);
 
-        return umsEnc.encrypt(decryptStr);
+        return targetEnc.encrypt(decryptStr);
     }
 
 }

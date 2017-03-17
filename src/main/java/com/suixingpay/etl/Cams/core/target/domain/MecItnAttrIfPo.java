@@ -1,5 +1,8 @@
 package com.suixingpay.etl.Cams.core.target.domain;
 
+import com.suixingpay.example.ChangeFlag;
+import com.suixingpay.example.Enum.CreateEnum;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,13 +20,16 @@ public class MecItnAttrIfPo{
 	// UUID
 	@Id
 	@Column(name = "UUID")
+	@ChangeFlag(systemCreate = CreateEnum.TYPE_UUID)
 	private	String	uuid;
 	// 用户号
 	@Column(name = "USR_ID")
+    @ChangeFlag(alise = "USR_IN_NO")
 	private	String	usrId;
 	// 内部商编
 	@Column(name = "IN_MNO")
-	private	String	inMno;
+    @ChangeFlag(alise = "USR_IN_NO")
+    private	String	inMno;
 	// 商户运营归属
 	@Column(name = "MEC_OPER_ATTR_NO")
 	private	String	mecOperAttrNo;
@@ -65,6 +71,7 @@ public class MecItnAttrIfPo{
 	private	String	orgNo;
 	// 系统ID
 	@Column(name = "SYS_ID")
+    @ChangeFlag(defaultValue = "CAMS")
 	private	String	sysId;
 	// 首次创建人编号
 	@Column(name = "CTE_STFF_NO")
@@ -74,15 +81,19 @@ public class MecItnAttrIfPo{
 	private	String	uteStffNo;
 	// 创建日期
 	@Column(name = "DT_CTE")
+    @ChangeFlag(alise = "CREATE_DATE")
 	private	String	dtCte;
 	// 修改日期
 	@Column(name = "DT_UTE")
+    @ChangeFlag(alise = "UPDATE_DATE")
 	private	String	dtUte;
 	// 创建时间
 	@Column(name = "TM_CTE")
+    @ChangeFlag(alise = "CREATE_TIME")
 	private	String	tmCte;
 	// 修改时间
 	@Column(name = "TM_UTE")
+    @ChangeFlag(alise = "UPDATE_TIME")
 	private	String	tmUte;
 
 	public void setUuid(String uuid) {

@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * Created on: 2017-02-21 15:46:53
  */
 @Entity
-@Table(name = "bap.T_BAP_MEC_ITN_ATTR_IF")
+@Table(name = "cams.T_CAMS_USR_LOGIN")
 public class MecPo {
 	// 用户编号
 	@Id
