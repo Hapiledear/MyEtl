@@ -113,7 +113,7 @@ public class CreateUtils {
                 try {
                     ChangeFlag changeType = field.getAnnotation(ChangeFlag.class);
                     Column column = field.getAnnotation(Column.class);
-                    String inMnoName = changeType.inMnoName();
+                //    String inMnoName = changeType.inMnoName();
                     String columnName;
                     Object columnValue;
 
@@ -125,9 +125,14 @@ public class CreateUtils {
                         columnValue = !StringUtils.isEmpty(changeType.defaultValue())
                                 ? changeType.defaultValue() : obj.get(columnName);
 
+                        //usrid = SXF+别名字段
+                        if ("USR_ID".equals(column.name())){
+                            columnValue = "SXF"+columnValue;
+                        }
+
                         CreateEnum createType = changeType.systemCreate();
                         if (CreateEnum.TYPE_NONE != createType){
-                            columnValue = CreateUtils.create(createType,obj.get(inMnoName));
+                            columnValue = CreateUtils.create(createType);
                         }
 
                         EncryptorEnum encType = changeType.encryptType();
@@ -142,6 +147,7 @@ public class CreateUtils {
                             String  timeValue = getStringValue(obj.get(cNames[1]));
                            columnValue = mergeDateStr(dateValue,timeValue);
                         }
+
                         String switchStr = changeType.switchType();
                         if (!StringUtils.isEmpty(switchStr)){
                             columnValue = switchState(switchStr,columnValue);
@@ -171,11 +177,11 @@ public class CreateUtils {
 
     /**
      * 系统创建
-     * @param type uuid usrId
      * @param o
+     * @param type uuid usrId
      * @return
      */
-    public static synchronized Object create(CreateEnum type, Object inMno) {
+    public static synchronized Object create(CreateEnum type) {
         switch (type){
             case TYPE_UUID:
                 return getUUID();

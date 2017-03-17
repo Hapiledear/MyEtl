@@ -34,7 +34,7 @@ public @interface ChangeFlag {
 
     /**
      * 来源表的字段名，当字段名称不同时使用
-
+     * 别名可与其他共存
      * @return
      */
     String alise() default "";
