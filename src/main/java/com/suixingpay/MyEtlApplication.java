@@ -34,24 +34,5 @@ public class MyEtlApplication {
         TestEvent event = new TestEvent(TestEvent.class, DbType.TEST);
         SpringContextUtil.getContext().publishEvent(event);
 
-
-
-
-        Thread thread1 = new Thread(()->{
-            String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
-            String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
-            String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123456789");
-            LOGGER.info("thread1 1-2相同2-3不同{}-{}-{}",res1,res2,res3);
-        });
-        thread1.start();
-
-        Thread thread2 = new Thread(()->{
-            String res1 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555555");
-            String res2 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"123321");
-            String res3 = (String) CreateUtils.create(CreateEnum.TYPE_USR_ID,"555554");
-            LOGGER.info("thread2 1-2相同2-3不同{}-{}-{}",res1,res2,res3);
-        });
-        thread2.start();
-
     }
 }

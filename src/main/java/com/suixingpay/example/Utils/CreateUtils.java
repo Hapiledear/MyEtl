@@ -74,6 +74,9 @@ public class CreateUtils {
 
         throw new Exception("类型不匹配");
     }
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
 
 
     /**
@@ -175,9 +178,10 @@ public class CreateUtils {
     public static synchronized Object create(CreateEnum type, Object inMno) {
         switch (type){
             case TYPE_UUID:
-                return 100321;
+                return getUUID();
             case TYPE_USR_ID:{
-                String usrId ;
+                return usrIdSeed.incrementAndGet();
+              /*   String usrId ="1234";
                 lock.lock();
                 try {
                    usrId = usrIdMap.get(inMno);
@@ -189,7 +193,7 @@ public class CreateUtils {
                     lock.unlock();
                 }
 
-                return "SXF"+usrId;
+                return "SXF"+usrId;*/
             }
 
             default:

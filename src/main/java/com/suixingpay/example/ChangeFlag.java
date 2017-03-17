@@ -34,12 +34,13 @@ public @interface ChangeFlag {
 
     /**
      * 来源表的字段名，当字段名称不同时使用
+
      * @return
      */
     String alise() default "";
 
     /**
-     * 固定值
+     * 固定值,制空请用'-'符号
      * @return
      */
     String defaultValue() default "";
