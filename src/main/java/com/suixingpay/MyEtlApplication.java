@@ -26,7 +26,7 @@ public class MyEtlApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyEtlApplication.class, args);
         LOGGER.info("---------spring boot执行完毕-----------");
-        TestEvent event = new TestEvent(TestEvent.class, DbType.CAMS);
+        TestEvent event = new TestEvent(TestEvent.class, DbType.TEST);
         SpringContextUtil.getContext().publishEvent(event);
 
     }

@@ -45,7 +45,6 @@ import com.suixingpay.sourceCode.events.TestEvent;
 
     @Autowired private UsrProdBindDao usrProdBindDao;
 
-    @Autowired private RealDao realDao;
 
     private String testSqlLimit = " where rownum <=10";
 
@@ -83,10 +82,6 @@ import com.suixingpay.sourceCode.events.TestEvent;
             ;
         CreateUtils.StoT(UsrProdBindPo.class,usrProdBindDao,sql);*/
 
-//T_UMS_REAL
-/*        String sql = "select * from CAMS.T_CAMS_CUST_AUTH_HIS"
-            +testSqlLimit;
-        CreateUtils.StoT(RealPo.class,realDao,sql);*/
 
     }
 

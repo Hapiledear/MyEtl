@@ -29,7 +29,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface ChangeFlag {
 
-    String inMnoName() default "";
+    String PKFiled() default "";
 
     /**
      * 来源表的字段名，当字段名称不同时使用
@@ -78,5 +78,7 @@ public @interface ChangeFlag {
     String switcSTS() default "";
 
     boolean ToString() default false;
+
+    boolean ToInteger() default false;
 
 }
